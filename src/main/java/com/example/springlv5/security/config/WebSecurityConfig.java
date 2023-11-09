@@ -1,4 +1,4 @@
-package com.example.springlv5.config;
+package com.example.springlv5.security.config;
 
 import com.example.springlv5.security.jwt.JwtAuthenticationFilter;
 import com.example.springlv5.security.jwt.JwtAuthorizationFilter;
