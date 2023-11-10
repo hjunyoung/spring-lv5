@@ -18,7 +18,7 @@ public class UserService {
     public SuccessBody<?> signup(SignupRequest signupRequest) {
         User user = User.of(signupRequest, passwordEncoder, userRepository);
         userRepository.save(user);
-        return ApiResponse.SuccessBody
+        return SuccessBody
             .builder()
             .message("회원가입 성공")
             .build();
