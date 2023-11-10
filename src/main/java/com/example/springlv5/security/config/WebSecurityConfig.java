@@ -1,11 +1,10 @@
 package com.example.springlv5.security.config;
 
-import com.example.springlv5.domain.user.entity.UserRole;
+import com.example.springlv5.domain.user.UserRepository;
 import com.example.springlv5.security.jwt.JwtAuthenticationFilter;
 import com.example.springlv5.security.jwt.JwtAuthorizationFilter;
 import com.example.springlv5.security.jwt.JwtUtil;
 import com.example.springlv5.security.userdetails.UserDetailsServiceImpl;
-import com.example.springlv5.global.GetUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +27,8 @@ public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserRepository userRepository;
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final GetUtils getUtils;
 
 
     // authenticationManager 생성하고 Bean으로 등록
@@ -41,7 +40,7 @@ public class WebSecurityConfig {
     // JwtAuthenticationFilter를 Bean으로 등록
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil, getUtils);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil, userRepository);
         // JwtAuthenticationFilter에서 getAuthenticationManger()로 AuthenticationManager 가져옴
         // 그러기 위해 여기서 AuthenticationManager 설정하는 것
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));

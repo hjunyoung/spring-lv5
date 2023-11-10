@@ -1,5 +1,6 @@
 package com.example.springlv5.security.jwt;
 
+import com.example.springlv5.domain.user.UserRepository;
 import com.example.springlv5.domain.user.dto.LoginRequest;
 import com.example.springlv5.domain.user.dto.LoginResponse;
 import com.example.springlv5.domain.user.entity.User;
@@ -8,7 +9,6 @@ import com.example.springlv5.exception.ErrorCode;
 import com.example.springlv5.global.ApiResponse;
 import com.example.springlv5.global.ApiResponse.FailBody;
 import com.example.springlv5.global.ApiResponse.SuccessBody;
-import com.example.springlv5.global.GetUtils;
 import com.example.springlv5.global.ResponseStatus;
 import com.example.springlv5.security.userdetails.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,13 +28,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
-    private final GetUtils getUtils;
-
+    private final UserRepository userRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, GetUtils getUtils) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
-        this.getUtils = getUtils;
+        this.userRepository = userRepository;
         setFilterProcessesUrl("/api/auth/login");
     }
 
@@ -77,7 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         setResponseConfig(response, HttpStatus.OK);
 
-        User user = getUtils.getUserByEmail(email);
+        User user = userRepository.findByEmail(email).get();
         // LoginResponse loginResponse = new LoginResponse(user);
         LoginResponse loginResponse = LoginResponse.of(user);
         SuccessBody<Object> successBody = ApiResponse.SuccessBody
