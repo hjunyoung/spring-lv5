@@ -66,6 +66,7 @@ public class WebSecurityConfig {
         "/v3/api-docs/**",
         "/swagger-ui/**"
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // CSRF 설정
