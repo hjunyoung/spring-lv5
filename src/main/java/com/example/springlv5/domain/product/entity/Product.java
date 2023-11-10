@@ -77,7 +77,7 @@ public class Product {
         return checkIfProductExistsAndGetOne(productId, productRepository);
     }
 
-    private static Product checkIfProductExistsAndGetOne(Long productId, ProductRepository productRepository) {
+    public static Product checkIfProductExistsAndGetOne(Long productId, ProductRepository productRepository) {
         return productRepository.findById(productId).orElseThrow(() ->
             new NotFoundException("해당하는 상품은 존재하지 않습니다", ErrorCode.RESOURCE_NOT_FOUND)
         );
