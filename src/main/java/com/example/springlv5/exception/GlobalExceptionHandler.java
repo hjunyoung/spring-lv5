@@ -4,6 +4,7 @@ import com.example.springlv5.global.ApiResponse.FailBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -25,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<FailBody> NotFoundExceptionHandler(
-        DuplicatedException e) {
+        NotFoundException e) {
         log.info("NotFoundException logging");
         String message = e.getLocalizedMessage();
 
@@ -33,6 +34,24 @@ public class GlobalExceptionHandler {
             .message(e.getLocalizedMessage())
             .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(response);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<FailBody> MethodArgumentNotValidExceptionHandler(
+        MethodArgumentNotValidException e) {
+        log.info("Input validation error logging");
+
+        String message = e.getBindingResult()
+            .getAllErrors()
+            .get(0)
+            .getDefaultMessage();
+
+        FailBody response = FailBody.builder()
+            .message(message)
+            .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(response);
     }
 }
