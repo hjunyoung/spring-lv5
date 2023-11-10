@@ -18,6 +18,7 @@ public class UserService {
     public SuccessBody<?> signup(SignupRequest signupRequest) {
         User user = User.getEncryptedUserFrom(signupRequest, passwordEncoder, userRepository);
         userRepository.save(user);
+
         return SuccessBody
             .builder()
             .message("회원가입 성공")

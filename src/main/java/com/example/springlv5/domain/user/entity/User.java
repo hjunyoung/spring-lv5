@@ -70,6 +70,7 @@ public class User {
 
         // password 암호화
         String encryptedPassword = passwordEncoder.encode(signupRequest.getPassword());
+
         return new User(
             email,
             encryptedPassword,

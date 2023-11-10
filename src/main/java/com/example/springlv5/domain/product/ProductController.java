@@ -24,6 +24,7 @@ public class ProductController {
     @PostMapping("")
     public ResponseEntity<SuccessBody<?>> addProduct(@RequestBody @Validated ProductRequest productRequest) {
         SuccessBody<?> response = productService.addProduct(productRequest);
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(response);
@@ -32,6 +33,7 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<SuccessBody<?>> getOneProduct(@PathVariable Long productId) {
         SuccessBody<?> response = productService.getOneProduct(productId);
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
@@ -43,7 +45,12 @@ public class ProductController {
             @RequestParam(defaultValue = "name") SortBy sortby,
             @RequestParam(defaultValue = "desc") String order) {
         System.out.println("page: "+ page + ", sortby: " + sortby + ", order: " + order);
-        SuccessBody<?> response = productService.getProducts(page - 1, sortby.getValue(), order);
+        SuccessBody<?> response = productService.getProducts(
+            page - 1,
+            sortby.getValue(),
+            order
+        );
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);

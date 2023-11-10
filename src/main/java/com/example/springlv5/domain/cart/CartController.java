@@ -28,8 +28,12 @@ public class CartController {
     public ResponseEntity<?> addCart(@PathVariable Long productId,
         @RequestBody @Validated CartRequest cartRequest,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SuccessBody<?> response = cartService.addCart(productId, cartRequest,
-            userDetails.getUser());
+        SuccessBody<?> response = cartService.addCart(
+            productId,
+            cartRequest,
+            userDetails.getUser()
+        );
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(response);
@@ -38,6 +42,7 @@ public class CartController {
     @GetMapping("")
     public ResponseEntity<?> getCarts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         SuccessBody<?> response = cartService.getCarts(userDetails.getUser());
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
@@ -45,10 +50,11 @@ public class CartController {
 
     @PatchMapping("/{cartId}")
     public ResponseEntity<?> updateCart(@PathVariable Long cartId,
-            @RequestBody @Validated CartRequest cartRequest,
-            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @RequestBody @Validated CartRequest cartRequest,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         SuccessBody<?> response = cartService.updateCart(cartId, cartRequest,
             userDetails.getUser());
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
@@ -56,8 +62,9 @@ public class CartController {
 
     @DeleteMapping("/{cartId}")
     public ResponseEntity<?> deleteCart(@PathVariable Long cartId,
-            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         SuccessBody<?> response = cartService.deleteCart(cartId, userDetails.getUser());
+
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);

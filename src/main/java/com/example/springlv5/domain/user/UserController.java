@@ -19,6 +19,7 @@ public class UserController {
     @PostMapping("/auth/signup")
     public ResponseEntity<SuccessBody<?>> signup(@RequestBody @Validated SignupRequest signupRequest) {
         SuccessBody<?> response = userService.signup(signupRequest);
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(response);

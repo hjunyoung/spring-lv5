@@ -15,6 +15,7 @@ public enum Gender {
     // body로 받은 enum validation 하는 경우
     @JsonCreator
     public static Gender parsing(String inputValue) {
+
         return Stream.of(Gender.values())
             .filter(gender -> gender.getValue().equals(inputValue.toUpperCase()))
             .findFirst()

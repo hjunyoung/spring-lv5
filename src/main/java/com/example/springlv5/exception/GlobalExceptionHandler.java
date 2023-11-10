@@ -15,10 +15,13 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<FailBody> handleException(Exception e) {
         log.info("Bad request exception logging");
 
-        FailBody response = FailBody.builder()
+        FailBody response = FailBody
+            .builder()
             .message(e.getLocalizedMessage())
             .build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
             .body(response);
     }
 
@@ -26,10 +29,13 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<FailBody> SecurityExceptionException(SecurityException e) {
         log.info("SecurityException logging");
 
-        FailBody response = FailBody.builder()
+        FailBody response = FailBody
+            .builder()
             .message(e.getLocalizedMessage())
             .build();
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+
+        return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
             .body(response);
     }
 
@@ -37,10 +43,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<FailBody> DuplicatedExceptionHandler(
         DuplicatedException e) {
         log.info("DuplicatedException logging");
-        FailBody response = FailBody.builder()
+
+        FailBody response = FailBody
+            .builder()
             .message(e.getLocalizedMessage())
             .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT)
+
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
             .body(response);
     }
 
@@ -48,11 +58,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<FailBody> NotFoundExceptionHandler(
         NotFoundException e) {
         log.info("NotFoundException logging");
+
         String message = e.getLocalizedMessage();
 
-        FailBody response = FailBody.builder()
+        FailBody response = FailBody
+            .builder()
             .message(e.getLocalizedMessage())
             .build();
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(response);
     }
@@ -67,7 +80,8 @@ public class GlobalExceptionHandler {
             .get(0)
             .getDefaultMessage();
 
-        FailBody response = FailBody.builder()
+        FailBody response = FailBody
+            .builder()
             .message(message)
             .build();
 

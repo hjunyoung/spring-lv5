@@ -27,6 +27,7 @@ public class ProductService {
     public SuccessBody<?> addProduct(ProductRequest productRequest) {
         Product product = Product.from(productRequest);
         productRepository.save(product);
+
         return SuccessBody
             .builder()
             .message("상품등록 성공")
@@ -36,6 +37,7 @@ public class ProductService {
 
     public SuccessBody<?> getOneProduct(Long productId) {
         Product product = Product.getOneProductFrom(productId, productRepository);
+
         return SuccessBody
             .builder()
             .message("상품조회 성공")
@@ -50,6 +52,7 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, PRODUCTS_PER_PAGE, sort);
 
         Page<Product> products = productRepository.findAll(pageable);
+
         return SuccessBody
             .builder()
             .message("상품 목록 조회 성공")
