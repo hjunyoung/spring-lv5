@@ -67,7 +67,7 @@ public class User {
         this.role = userRole;
     }
 
-    public static User of(SignupRequest signupRequest,
+    public static User getEncryptedUserFrom(SignupRequest signupRequest,
         PasswordEncoder passwordEncoder,
         UserRepository userRepository) {
         // email 중복 확인

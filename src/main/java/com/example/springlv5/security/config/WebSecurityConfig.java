@@ -1,5 +1,6 @@
 package com.example.springlv5.security.config;
 
+import com.example.springlv5.domain.user.entity.UserRole;
 import com.example.springlv5.security.jwt.JwtAuthenticationFilter;
 import com.example.springlv5.security.jwt.JwtAuthorizationFilter;
 import com.example.springlv5.security.jwt.JwtUtil;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -84,6 +86,8 @@ public class WebSecurityConfig {
                 .permitAll() // swagger 접근 허용
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/products")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated() // 그 외 모든 요청 인증처리
         );
