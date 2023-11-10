@@ -1,7 +1,10 @@
 package com.example.springlv5.domain.product.entity;
 
 import com.example.springlv5.domain.cart.entity.Cart;
+import com.example.springlv5.domain.product.ProductRepository;
 import com.example.springlv5.domain.product.dto.ProductRequest;
+import com.example.springlv5.exception.ErrorCode;
+import com.example.springlv5.exception.NotFoundException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -67,6 +70,16 @@ public class Product {
             productRequest.getCategory(),
             productRequest.getDescription(),
             productRequest.getImageUrl()
+        );
+    }
+
+    public static Product getOneProductFrom(Long productId, ProductRepository productRepository) {
+        return checkIfProductExistsAndGetOne(productId, productRepository);
+    }
+
+    private static Product checkIfProductExistsAndGetOne(Long productId, ProductRepository productRepository) {
+        return productRepository.findById(productId).orElseThrow(() ->
+            new NotFoundException("해당하는 상품은 존재하지 않습니다", ErrorCode.RESOURCE_NOT_FOUND)
         );
     }
 }

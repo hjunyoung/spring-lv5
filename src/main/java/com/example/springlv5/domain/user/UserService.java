@@ -16,7 +16,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public SuccessBody<?> signup(SignupRequest signupRequest) {
-        User user = User.of(signupRequest, passwordEncoder, userRepository);
+        User user = User.getEncryptedUserFrom(signupRequest, passwordEncoder, userRepository);
         userRepository.save(user);
         return SuccessBody
             .builder()
