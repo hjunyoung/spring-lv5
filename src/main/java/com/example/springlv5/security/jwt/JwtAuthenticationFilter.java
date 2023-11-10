@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final JwtUtil jwtUtil;
     private final GetUtils getUtils;
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil, GetUtils getUtils) {
         this.jwtUtil = jwtUtil;

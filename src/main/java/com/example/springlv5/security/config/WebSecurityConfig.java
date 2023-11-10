@@ -86,6 +86,8 @@ public class WebSecurityConfig {
                 .permitAll() // swagger 접근 허용
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+                .requestMatchers(HttpMethod.GET,  "/api/products/**")
+                .permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/products")
                 .hasRole("ADMIN")
                 .anyRequest()
