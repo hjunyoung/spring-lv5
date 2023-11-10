@@ -11,7 +11,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j(topic = "Global Exception Handler")
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(value = Exception.class)
+    protected ResponseEntity<FailBody> handleException(Exception e) {
+        log.info("Bad request exception logging");
 
+        FailBody response = FailBody.builder()
+            .message(e.getLocalizedMessage())
+            .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(response);
+    }
 
     @ExceptionHandler(value = DuplicatedException.class)
     public ResponseEntity<FailBody> DuplicatedExceptionHandler(

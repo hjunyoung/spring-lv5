@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +32,18 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<SuccessBody<?>> getOneProduct(@PathVariable Long productId) {
         SuccessBody<?> response = productService.getOneProduct(productId);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(response);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<SuccessBody<?>> getProducts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "name") SortBy sortby,
+            @RequestParam(defaultValue = "desc") String order) {
+        System.out.println("page: "+ page + ", sortby: " + sortby + ", order: " + order);
+        SuccessBody<?> response = productService.getProducts(page - 1, sortby.getValue(), order);
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
