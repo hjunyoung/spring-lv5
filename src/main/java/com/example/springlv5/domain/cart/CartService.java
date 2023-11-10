@@ -90,7 +90,7 @@ public class CartService {
     // 이 메스드는 Entity에 있으면 좋나?
     // entity로 들어가면 parameter가 3개가 됨. 뭐가 좋나?
     private void checkIfCartExists(Long productId, User user) {
-        cartRepository.findByProductIdAndUserId(productId, user.getId())
+        cartRepository.findByProductIdAndUser(productId, user)
             .ifPresent(
                 (i) -> {
                     throw new DuplicatedException("이미 장바구니에 담겨있는 상품입니다",
