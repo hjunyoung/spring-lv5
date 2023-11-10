@@ -63,6 +63,19 @@ public class CartService {
             .build();
     }
 
+
+
+    public SuccessBody<?> deleteCart(Long cartId, User user) {
+        Cart cart = checkIfCartExists(cartId);
+        validateOwnership(cart, user);
+        cartRepository.delete(cart);
+
+        return SuccessBody
+            .builder()
+            .message("장바구니 삭제 성공")
+            .build();
+    }
+
     private static void validateOwnership(Cart cart, User user) {
         if (!cart.getUser().getEmail().equals(user.getEmail())) {
             throw new SecurityException("접근 권한이 없습니다.");
@@ -85,6 +98,5 @@ public class CartService {
                 }
             );
     }
-
 
 }

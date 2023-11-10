@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,15 @@ public class CartController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         SuccessBody<?> response = cartService.updateCart(cartId, cartRequest,
             userDetails.getUser());
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(response);
+    }
+
+    @DeleteMapping("/{cartId}")
+    public ResponseEntity<?> deleteCart(@PathVariable Long cartId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        SuccessBody<?> response = cartService.deleteCart(cartId, userDetails.getUser());
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
