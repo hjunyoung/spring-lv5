@@ -19,6 +19,4 @@ public class SignupRequest extends LoginRequest {
     @NotBlank(message = "주소를 입력하세요")
     @Length(max = 255, message ="입력할 수 있는 글자수를 초과했습니다")
     private String address;
-
-    private boolean admin = false;
 }
