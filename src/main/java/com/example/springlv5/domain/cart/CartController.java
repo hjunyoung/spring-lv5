@@ -41,4 +41,15 @@ public class CartController {
             .status(HttpStatus.OK)
             .body(response);
     }
+
+    @PatchMapping("/{cartId}")
+    public ResponseEntity<?> updateCart(@PathVariable Long cartId,
+            @RequestBody @Validated CartRequest cartRequest,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        SuccessBody<?> response = cartService.updateCart(cartId, cartRequest,
+            userDetails.getUser());
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(response);
+    }
 }

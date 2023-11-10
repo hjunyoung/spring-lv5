@@ -5,6 +5,7 @@ import com.example.springlv5.domain.product.entity.Product;
 import com.example.springlv5.domain.user.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -51,5 +52,9 @@ public class Cart {
 
     public static List<Cart> getCartsOf(User user, CartRepository cartRepository) {
         return cartRepository.findAllByUserId(user.getId()).orElse(new ArrayList<>());
+    }
+
+    public void updateQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

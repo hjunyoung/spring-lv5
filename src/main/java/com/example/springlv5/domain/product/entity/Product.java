@@ -1,6 +1,5 @@
 package com.example.springlv5.domain.product.entity;
 
-import com.example.springlv5.domain.cart.entity.Cart;
 import com.example.springlv5.domain.product.ProductRepository;
 import com.example.springlv5.domain.product.dto.ProductRequest;
 import com.example.springlv5.exception.ErrorCode;
@@ -10,10 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,8 +45,9 @@ public class Product {
     @Column
     private String imageUrl;
 
-    @OneToMany(mappedBy = "product")
-    private List<Cart> cartList = new ArrayList<>();
+    // Product에서 Cart 조회하지 않으므로 필요없음
+    // @OneToMany(mappedBy = "product")
+    // private List<Cart> cartList = new ArrayList<>();
 
     private Product(String name, double price, int stock, String category, String description,
         String imageUrl) {

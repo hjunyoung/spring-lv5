@@ -22,6 +22,17 @@ public class GlobalExceptionHandler {
             .body(response);
     }
 
+    @ExceptionHandler(value = SecurityException.class)
+    protected ResponseEntity<FailBody> SecurityExceptionException(SecurityException e) {
+        log.info("SecurityException logging");
+
+        FailBody response = FailBody.builder()
+            .message(e.getLocalizedMessage())
+            .build();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            .body(response);
+    }
+
     @ExceptionHandler(value = DuplicatedException.class)
     public ResponseEntity<FailBody> DuplicatedExceptionHandler(
         DuplicatedException e) {

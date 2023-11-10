@@ -1,6 +1,5 @@
 package com.example.springlv5.domain.user.entity;
 
-import com.example.springlv5.domain.cart.entity.Cart;
 import com.example.springlv5.domain.user.UserRepository;
 import com.example.springlv5.domain.user.dto.SignupRequest;
 import com.example.springlv5.exception.DuplicatedException;
@@ -12,16 +11,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
