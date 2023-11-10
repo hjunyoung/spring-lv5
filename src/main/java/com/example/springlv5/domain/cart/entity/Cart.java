@@ -11,13 +11,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "cart")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cart {
@@ -46,5 +47,9 @@ public class Cart {
 
     public static Cart of(Product product, int quantity, User user) {
         return new Cart(product, quantity, user);
+    }
+
+    public static List<Cart> getCartsOf(User user, CartRepository cartRepository) {
+        return cartRepository.findAllByUserId(user.getId()).orElse(new ArrayList<>());
     }
 }

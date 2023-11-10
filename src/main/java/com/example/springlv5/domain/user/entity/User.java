@@ -53,8 +53,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Cart> cartList = new ArrayList<>();
+    // user에서 cart 조회하지 않으므로 없어도 됨
+    // @OneToMany(mappedBy = "user")
+    // private List<Cart> cartList = new ArrayList<>();
 
 
     private User(String email, String password, String gender, String phoneNumber, String address,
