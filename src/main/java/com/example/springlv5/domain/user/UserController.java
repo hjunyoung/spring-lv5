@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     @PostMapping("/auth/signup")
-    public ResponseEntity<SuccessBody<?>> signup(@RequestBody @Validated SignupRequest signupRequest) {
-        SuccessBody<?> response = userService.signup(signupRequest);
+    public ResponseEntity<SuccessBody<Void>> signup(@RequestBody @Validated SignupRequest signupRequest) {
+        SuccessBody<Void> response = userService.signup(signupRequest);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)

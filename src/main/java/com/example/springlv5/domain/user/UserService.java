@@ -15,12 +15,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SuccessBody<?> signup(SignupRequest signupRequest) {
+    public SuccessBody<Void> signup(SignupRequest signupRequest) {
         User user = User.getEncryptedUserFrom(signupRequest, passwordEncoder, userRepository);
         userRepository.save(user);
 
         return SuccessBody
-            .builder()
+            .<Void>builder()
             .message("회원가입 성공")
             .build();
     }

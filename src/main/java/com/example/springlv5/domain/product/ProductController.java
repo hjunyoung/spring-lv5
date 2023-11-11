@@ -1,8 +1,10 @@
 package com.example.springlv5.domain.product;
 
 import com.example.springlv5.domain.product.dto.ProductRequest;
+import com.example.springlv5.domain.product.dto.ProductResponse;
 import com.example.springlv5.global.ApiResponse.SuccessBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,8 +24,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("")
-    public ResponseEntity<SuccessBody<?>> addProduct(@RequestBody @Validated ProductRequest productRequest) {
-        SuccessBody<?> response = productService.addProduct(productRequest);
+    public ResponseEntity<SuccessBody<ProductResponse>> addProduct(@
+        RequestBody @Validated ProductRequest productRequest) {
+        SuccessBody<ProductResponse> response = productService.addProduct(productRequest);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -31,8 +34,8 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<SuccessBody<?>> getOneProduct(@PathVariable Long productId) {
-        SuccessBody<?> response = productService.getOneProduct(productId);
+    public ResponseEntity<SuccessBody<ProductResponse>> getOneProduct(@PathVariable Long productId) {
+        SuccessBody<ProductResponse> response = productService.getOneProduct(productId);
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -40,12 +43,12 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<SuccessBody<?>> getProducts(
+    public ResponseEntity<SuccessBody<Page<ProductResponse>>> getProducts(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "name") SortBy sortby,
             @RequestParam(defaultValue = "desc") String order) {
         System.out.println("page: "+ page + ", sortby: " + sortby + ", order: " + order);
-        SuccessBody<?> response = productService.getProducts(
+        SuccessBody<Page<ProductResponse>> response = productService.getProducts(
             page - 1,
             sortby.getValue(),
             order

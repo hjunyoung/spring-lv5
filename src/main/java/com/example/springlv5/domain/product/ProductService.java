@@ -24,28 +24,28 @@ public class ProductService {
     private final int PRODUCTS_PER_PAGE = 10;
 
 
-    public SuccessBody<?> addProduct(ProductRequest productRequest) {
+    public SuccessBody<ProductResponse> addProduct(ProductRequest productRequest) {
         Product product = Product.from(productRequest);
         productRepository.save(product);
 
         return SuccessBody
-            .builder()
+            .<ProductResponse>builder()
             .message("상품등록 성공")
             .data(ProductResponse.from(product))
             .build();
     }
 
-    public SuccessBody<?> getOneProduct(Long productId) {
+    public SuccessBody<ProductResponse> getOneProduct(Long productId) {
         Product product = Product.getOneProductFrom(productId, productRepository);
 
         return SuccessBody
-            .builder()
+            .<ProductResponse>builder()
             .message("상품조회 성공")
             .data(ProductResponse.from(product))
             .build();
     }
 
-    public SuccessBody<?> getProducts(int page, String sortby, String order) {
+    public SuccessBody<Page<ProductResponse>> getProducts(int page, String sortby, String order) {
         // 페이징 처리
         Direction direction = Direction.valueOf(order.toUpperCase());
         Sort sort = Sort.by(direction, sortby);
@@ -54,7 +54,7 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(pageable);
 
         return SuccessBody
-            .builder()
+            .<Page<ProductResponse>>builder()
             .message("상품 목록 조회 성공")
             .data(products.map(ProductResponse::from))
             .build();

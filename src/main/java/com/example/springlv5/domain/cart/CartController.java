@@ -1,8 +1,12 @@
 package com.example.springlv5.domain.cart;
 
 import com.example.springlv5.domain.cart.dto.CartRequest;
+import com.example.springlv5.domain.cart.dto.CartResponse;
+import com.example.springlv5.domain.cart.dto.CartUpdateResponse;
 import com.example.springlv5.global.ApiResponse.SuccessBody;
 import com.example.springlv5.security.userdetails.UserDetailsImpl;
+import jakarta.validation.constraints.Null;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +29,10 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/{productId}")
-    public ResponseEntity<?> addCart(@PathVariable Long productId,
+    public ResponseEntity<SuccessBody<CartResponse>> addCart(@PathVariable Long productId,
         @RequestBody @Validated CartRequest cartRequest,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SuccessBody<?> response = cartService.addCart(
+        SuccessBody<CartResponse> response = cartService.addCart(
             productId,
             cartRequest,
             userDetails.getUser()
@@ -40,8 +44,10 @@ public class CartController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getCarts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SuccessBody<?> response = cartService.getCarts(userDetails.getUser());
+    public ResponseEntity<SuccessBody<List<CartResponse>>> getCarts(
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        SuccessBody<List<CartResponse>> response =
+            cartService.getCarts(userDetails.getUser());
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -49,10 +55,10 @@ public class CartController {
     }
 
     @PatchMapping("/{cartId}")
-    public ResponseEntity<?> updateCart(@PathVariable Long cartId,
+    public ResponseEntity<SuccessBody<CartUpdateResponse>> updateCart(@PathVariable Long cartId,
         @RequestBody @Validated CartRequest cartRequest,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SuccessBody<?> response = cartService.updateCart(cartId, cartRequest,
+        SuccessBody<CartUpdateResponse> response = cartService.updateCart(cartId, cartRequest,
             userDetails.getUser());
 
         return ResponseEntity
@@ -61,9 +67,9 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}")
-    public ResponseEntity<?> deleteCart(@PathVariable Long cartId,
+    public ResponseEntity<SuccessBody<Void>> deleteCart(@PathVariable Long cartId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SuccessBody<?> response = cartService.deleteCart(cartId, userDetails.getUser());
+        SuccessBody<Void> response = cartService.deleteCart(cartId, userDetails.getUser());
 
         return ResponseEntity
             .status(HttpStatus.OK)

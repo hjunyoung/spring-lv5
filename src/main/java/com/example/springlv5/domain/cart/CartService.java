@@ -11,6 +11,8 @@ import com.example.springlv5.exception.DuplicatedException;
 import com.example.springlv5.exception.ErrorCode;
 import com.example.springlv5.exception.NotFoundException;
 import com.example.springlv5.global.ApiResponse.SuccessBody;
+import com.fasterxml.jackson.databind.util.ObjectBuffer;
+import jakarta.validation.constraints.Null;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
 
-    public SuccessBody<?> addCart(Long productId, CartRequest cartRequest, User user) {
+    public SuccessBody<CartResponse> addCart(Long productId, CartRequest cartRequest, User user) {
         Product product = Product.checkIfProductExistsAndGetOne(productId, productRepository);
         checkIfCartExists(productId, user);
 
@@ -31,12 +33,12 @@ public class CartService {
         cartRepository.save(cart);
 
         return SuccessBody
-            .builder()
+            .<CartResponse>builder()
             .message("장바구니 추가 성공")
             .build();
     }
 
-    public SuccessBody<?> getCarts(User user) {
+    public SuccessBody<List<CartResponse>> getCarts(User user) {
         List<CartResponse> cartResponseList =
             Cart.getCartsOf(user, cartRepository)
                 .stream()
@@ -44,20 +46,20 @@ public class CartService {
                 .toList();
 
         return SuccessBody
-            .builder()
+            .<List<CartResponse>>builder()
             .data(cartResponseList)
             .build();
     }
 
 
     @Transactional
-    public SuccessBody<?> updateCart(Long cartId, CartRequest cartRequest, User user) {
+    public SuccessBody<CartUpdateResponse> updateCart(Long cartId, CartRequest cartRequest, User user) {
         Cart cart = checkIfCartExists(cartId);
         validateOwnership(cart, user);
         cart.updateQuantity(cartRequest.getQuantity());
 
         return SuccessBody
-            .builder()
+            .<CartUpdateResponse>builder()
             .message("장바구니 수정 성공")
             .data(CartUpdateResponse.from(cart))
             .build();
@@ -65,13 +67,13 @@ public class CartService {
 
 
 
-    public SuccessBody<?> deleteCart(Long cartId, User user) {
+    public SuccessBody<Void> deleteCart(Long cartId, User user) {
         Cart cart = checkIfCartExists(cartId);
         validateOwnership(cart, user);
         cartRepository.delete(cart);
 
         return SuccessBody
-            .builder()
+            .<Void>builder()
             .message("장바구니 삭제 성공")
             .build();
     }
