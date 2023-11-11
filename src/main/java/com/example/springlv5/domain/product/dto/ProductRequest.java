@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 public class ProductRequest {
@@ -25,6 +26,6 @@ public class ProductRequest {
     private String category;
 
     private String description;
-    private String imageUrl;
+    private MultipartFile imageUrl;
 
 }

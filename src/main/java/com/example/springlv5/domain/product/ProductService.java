@@ -1,12 +1,9 @@
 package com.example.springlv5.domain.product;
 
+import com.example.springlv5.aws.S3Service;
 import com.example.springlv5.domain.product.dto.ProductRequest;
 import com.example.springlv5.domain.product.dto.ProductResponse;
 import com.example.springlv5.domain.product.entity.Product;
-import com.example.springlv5.exception.DuplicatedException;
-import com.example.springlv5.exception.ErrorCode;
-import com.example.springlv5.exception.NotFoundException;
-import com.example.springlv5.global.ApiResponse;
 import com.example.springlv5.global.ApiResponse.SuccessBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,17 +12,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
+    private final S3Service s3Service;
     private final ProductRepository productRepository;
     private final int PRODUCTS_PER_PAGE = 10;
 
-
-    public SuccessBody<ProductResponse> addProduct(ProductRequest productRequest) {
+    @Transactional
+    public SuccessBody<ProductResponse> addProduct(ProductRequest productRequest,
+        MultipartFile multipartFile) {
         Product product = Product.from(productRequest);
+        String imageUrl = s3Service.uploadFile(multipartFile);
+        product.updateImageUrl(imageUrl);
         productRepository.save(product);
 
         return SuccessBody
