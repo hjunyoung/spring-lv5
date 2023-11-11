@@ -49,14 +49,12 @@ public class Product {
     // @OneToMany(mappedBy = "product")
     // private List<Cart> cartList = new ArrayList<>();
 
-    private Product(String name, double price, int stock, String category, String description,
-        String imageUrl) {
+    private Product(String name, double price, int stock, String category, String description) {
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.category = category;
         this.description = description;
-        this.imageUrl = imageUrl;
     }
 
     public static Product from(ProductRequest productRequest) {
@@ -65,8 +63,7 @@ public class Product {
             productRequest.getPrice(),
             productRequest.getStock(),
             productRequest.getCategory(),
-            productRequest.getDescription(),
-            productRequest.getImageUrl()
+            productRequest.getDescription()
         );
     }
 
@@ -79,5 +76,9 @@ public class Product {
         return productRepository.findById(productId).orElseThrow(() ->
             new NotFoundException("해당하는 상품은 존재하지 않습니다", ErrorCode.RESOURCE_NOT_FOUND)
         );
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
