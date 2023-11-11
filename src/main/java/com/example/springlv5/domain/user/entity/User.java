@@ -64,6 +64,8 @@ public class User {
     public static User getEncryptedUserFrom(SignupRequest signupRequest,
         PasswordEncoder passwordEncoder,
         UserRepository userRepository) {
+
+        // TODO: remove email check login inside getEncryotedUserFrom method
         // email 중복 확인
         String email = signupRequest.getEmail();
         checkIfEmailExists(email, userRepository);
@@ -81,6 +83,7 @@ public class User {
         );
     }
 
+    // TODO: move this method to UserService
     private static void checkIfEmailExists(String email, UserRepository userRepository) {
         if (userRepository.existsByEmail(email)) {
             throw new DuplicatedException("이미 등록된 이메일입니다.", ErrorCode.RESOURCE_CONFLICT);
