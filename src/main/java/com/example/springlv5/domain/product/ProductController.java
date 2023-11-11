@@ -27,7 +27,7 @@ public class ProductController {
     @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
         MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<SuccessBody<ProductResponse>> addProduct(
-        @RequestPart("imageUrl") MultipartFile multipartFile,
+        @RequestPart(value = "imageUrl", required = false) MultipartFile multipartFile,
         @RequestPart ProductRequest productRequest) {
 
         SuccessBody<ProductResponse> response =
