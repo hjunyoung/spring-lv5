@@ -58,7 +58,7 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name spring-lv5 \
+          --application-name sparta-lv5 \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name cicd-test \
           --file-exists-behavior OVERWRITE \
