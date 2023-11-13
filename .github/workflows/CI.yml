@@ -35,6 +35,10 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
+    # 2-1) gradlew 의 권한 변경
+    - name: Run chmod to make gradlew executable
+      run: chmod +x ./gradlew
+
     # 3) application.properties 파일 생성
     - uses: actions/checkout@v3
     - run: touch ./src/main/resources/application.properties
