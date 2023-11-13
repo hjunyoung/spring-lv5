@@ -9,7 +9,7 @@ on:
 # 해당 yml 내에서 사용할 key - value
 env:
   S3_BUCKET_NAME: cicd-practice-s3
-  PROJECT_NAME: spring-lv5
+  PROJECT_NAME: sparta-lv5
   
 # workflow는 한개 이상의 job을 가지며, 각 job은 여러 step에 따라 단계를 나눌 수 있습니다.
 jobs:
@@ -62,5 +62,5 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name cicd-test \
           --file-exists-behavior OVERWRITE \
-          --s3-location bucket=cicd-practice-s3,bundleType=zip,key=spring-lv5/$GITHUB_SHA.zip \
+          --s3-location bucket=cicd-practice-s3,bundleType=zip,key=sparta-lv5/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
