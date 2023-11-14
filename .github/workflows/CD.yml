@@ -11,8 +11,8 @@ env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: cicd-practice-s3
   PROJECT_NAME: spring-lv5
-	CODE_DEPLOY_APPLICATION_NAME: cicd-test
-	CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: cicd-test-deployment-group
+  CODE_DEPLOY_APPLICATION_NAME: cicd-test
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: cicd-test-deployment-group
   
 # workflow는 한개 이상의 job을 가지며, 각 job은 여러 step에 따라 단계를 나눌 수 있습니다.
 jobs:
